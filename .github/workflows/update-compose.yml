@@ -53,7 +53,7 @@ jobs:
           committer: GitHub <noreply@github.com>  
           author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
           branch: create-pull-request/release/${{ env.ENV }}
-          base: ma
+          base: main
           delete-branch: true
           title: |
             [${{ env.ENV }}] Update Container Image
