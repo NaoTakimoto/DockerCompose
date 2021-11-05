@@ -22,7 +22,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Set env
-        if: ${{ github.event.client_payload.imagetag != null }}
+       # if: ${{ github.event.client_payload.imagetag != null }}
         run: echo "RELEASE_VERSION=/${{ github.event.client_payload.imagetag }}" | awk -F'[/]' '{print $1, $4}' | sed 's/ //g' >> $GITHUB_ENV
 
       # dcoker imageの修正
