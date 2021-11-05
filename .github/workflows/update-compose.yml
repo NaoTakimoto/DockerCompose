@@ -31,7 +31,7 @@ jobs:
       - name: chage docker image by auto
         uses: mikefarah/yq@master
         with:
-          cmd: yq e '.services.frontend.image = "nao148/springapp:${{ env.RELEASE_VERSION }}"' -i docker-compose.yml
+          cmd: yq e '.services.app.image = "nao148/springapp:${{ env.RELEASE_VERSION }}"' -i docker-compose.yml
 
 
       # 直接Actionから更新するver
@@ -39,4 +39,4 @@ jobs:
       - name: chage docker image by semiauto
         uses: mikefarah/yq@master
         with:
-          cmd: yq e '.services.frontend.image = "nao148/springapp:${{ github.event.inputs.imagetag }}"' -i docker-compose.yml
+          cmd: yq e '.services.app.image = "nao148/springapp:${{ github.event.inputs.imagetag }}"' -i docker-compose.yml
