@@ -2,7 +2,7 @@ version: "3"
 
 services:
    app:
-    image: n148/springapp:v1.0.0
+    image: n148/springapp:v1.0.1
     container_name: springapp
     ports: 
       - 8080:8080
