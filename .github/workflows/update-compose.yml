@@ -1,0 +1,42 @@
+name: Update DockerCompose
+
+on:
+  repository_dispatch:
+    types: [my-event]
+  workflow_dispatch:
+    inputs:
+      imagetag:
+        description: 'deploy app version'
+        required: true
+        default: ''
+
+jobs:
+  my-event:
+    env:
+      ENV: prod
+
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+
+      - name: Set env
+        if: ${{ github.event.client_payload.imagetag != null }}
+        run: echo "RELEASE_VERSION=/${{ github.event.client_payload.imagetag }}" | awk -F'[/]' '{print $1, $4}' | sed 's/ //g' >> $GITHUB_ENV
+
+      # dcoker imageの修正
+      # 別リポジトリから更新するver (https://github.com/NaoTakimoto/Spring-KakeiboApp)
+      #参考：https://mikefarah.gitbook.io/yq/commands/evaluate
+      - name: chage docker image by auto
+        uses: mikefarah/yq@master
+        with:
+          cmd: yq e '.services.frontend.image = "nao148/springapp:${{ env.RELEASE_VERSION }}"' -i docker-compose.yml
+
+
+      # 直接Actionから更新するver
+      # 参考：
+      - name: chage docker image by semiauto
+        uses: mikefarah/yq@master
+        with:
+          cmd: yq e '.services.frontend.image = "nao148/springapp:${{ github.event.inputs.imagetag }}"' -i docker-compose.yaml
