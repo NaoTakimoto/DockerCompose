@@ -39,8 +39,7 @@ jobs:
       - name: chage docker image by semiauto
         uses: mikefarah/yq@master
         with:
-          #cmd: yq e '.services.app.image |= "nao148/springapp:${{ github.event.inputs.imagetag }}"' -i docker-compose.yml
-          cmd: yq write -i 'docker-compose.yml' '.services.app.image' 'nao148/springapp:${{ github.event.inputs.imagetag }}' -i docker-compose.yml
+          cmd: yq e '.services.app.image |= "nao148/springapp:${{ github.event.inputs.imagetag }}"' -i docker-compose.yml
 
 
 
